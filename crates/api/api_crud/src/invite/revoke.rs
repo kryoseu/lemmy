@@ -13,15 +13,21 @@ pub async fn revoke_invitation(
 ) -> LemmyResult<Json<SuccessResponse>> {
   let pool = &mut context.pool();
 
-  let local_user_id = local_user_view.local_user.id;
-
   let invite = LocalUserInvite::read_by_token(pool, &data.token).await?;
 
-  if local_user_id != invite.local_user_id {
-    return Err(LemmyErrorType::InvalidInviteToken.into());
-  }
+  check_valid_invite(&invite, &local_user_view)?;
 
   LocalUserInvite::delete_by_token(pool, &data.token).await?;
 
   Ok(Json(SuccessResponse::default()))
+}
+
+fn check_valid_invite(
+  invite: &LocalUserInvite,
+  local_user_view: &LocalUserView,
+) -> LemmyResult<()> {
+  if local_user_view.local_user.id != invite.local_user_id {
+    return Err(LemmyErrorType::InvalidInviteToken.into());
+  }
+  Ok(())
 }

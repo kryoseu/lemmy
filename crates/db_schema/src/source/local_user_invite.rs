@@ -2,6 +2,7 @@ use crate::newtypes::{InvitationId, LocalUserId};
 use chrono::{DateTime, Utc};
 #[cfg(feature = "full")]
 use i_love_jesus::CursorKeysModule;
+#[cfg(feature = "full")]
 use lemmy_db_schema_file::schema::local_user_invite;
 use serde::{Deserialize, Serialize};
 
