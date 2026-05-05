@@ -32,7 +32,7 @@ impl LocalUserInviteQuery {
     query = query.filter(local_user_invite::local_user_id.eq(self.local_user_id));
 
     let paginated_query =
-      LocalUserInvite::paginate(query, &self.page_cursor, SortDirection::Asc, pool)
+      LocalUserInvite::paginate(query, &self.page_cursor, SortDirection::Desc, pool)
         .await?
         .then_order_by(key::published_at)
         .then_order_by(key::id);
