@@ -144,7 +144,7 @@ mod tests {
     let invite_1 = create_invite(pool, timmy_local_user.id, "token_one").await?;
     let invite_2 = create_invite(pool, timmy_local_user.id, "token_two").await?;
 
-    assert_eq!(list(pool, timmy_local_user.id).await?, [invite_1, invite_2]);
+    assert_eq!(list(pool, timmy_local_user.id).await?, [invite_2, invite_1]);
     assert_eq!(count(pool, timmy_local_user.id).await?, 2);
 
     Person::delete(pool, timmy_person.id).await?;
